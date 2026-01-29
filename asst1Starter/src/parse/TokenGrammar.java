@@ -507,7 +507,7 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
         }
         catch (NumberFormatException nfx)
         {
-            error(pos, CompError.OutOfRange(s));
+            error(pos, CompError.OutOfRange(s.toString()));
             return 0;
         }
     }
@@ -640,7 +640,7 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: `volatile ::= !{255} {255} => void
     //: ID ::= !{255} {255} => text
     //: STRING_LITERAL ::= !{255} {255} => text
-    //: CHARACTER_LITERAL ::= !{255} {255} => int return0(char)
+    //: CHAR_LITERAL ::= !{255} {255} => int return0(char)
     
     public int return0(char dummy) { return 0; }
 
