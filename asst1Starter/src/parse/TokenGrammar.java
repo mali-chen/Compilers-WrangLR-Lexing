@@ -533,9 +533,11 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: white ::= {" " 9 12} // space or tab or form feed
     //: white ::= eol
 
+    //allow text inside comments
     //: inside_comment ::= printable
     //: inside_comment ::= white*    
 
+    //comments
     //: single_line_comment ::= {47}{47} inside_comment* eol 
     //: multi_line_comment ::= {47}{42} inside_comment* {42}{47}
 
@@ -609,7 +611,7 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: `if ::= "if" !idChar white*
     //: reserved ::= `if
     //: `for ::= "for" !idChar white*
-    //: reserved ::= `if
+    //: reserved ::= `for
     //: `break ::= "break" !idChar white*
     //: reserved ::= `break
     //: `this ::= "this" !idChar white*
@@ -702,9 +704,12 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: reserved ::= `volatile
 
 
-    //: ID ::= !{255} {255} => text
-    //: STRING_LITERAL ::= !{255} {255} => text
-    //: CHAR_LITERAL ::= !{255} {255} => int return0(char)
+    //: ID ::= !reserved letter idChar** !idChar white*=> text
+
+    //: STRING_LITERAL ::= {34} letter++ {34} white* => text
+
+    //: quote ::= {39} => void
+    //: CHAR_LITERAL ::= quote letter quote white* => int return0(char)
     
     public int return0(char dummy) { return 0; }
 
