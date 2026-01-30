@@ -533,6 +533,12 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: white ::= {" " 9 12} // space or tab or form feed
     //: white ::= eol
 
+    //: inside_comment ::= printable
+    //: inside_comment ::= white*    
+
+    //: single_line_comment ::= {47}{47} inside_comment* eol 
+    //: multi_line_comment ::= {47}{42} inside_comment* {42}{47}
+
     // to handle the common end-of-line sequences on different types
     // of systems, we treat the sequence CR+LF as an end of line.
     // Otherwise, we treat CR or LF appearing separately each as an
