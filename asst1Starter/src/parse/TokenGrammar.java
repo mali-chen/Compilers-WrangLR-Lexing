@@ -532,14 +532,16 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     // whitespace
     //: white ::= {" " 9 12} // space or tab or form feed
     //: white ::= eol
+    //: white ::= single_line_comment
+    //: white ::= multi_line_comment
 
     //allow text inside comments
-    //: inside_comment ::= printable
-    //: inside_comment ::= white*    
+    //: inside_comment ::= !"*" !"/" printable 
+    //: inside_comment ::= {9 12}   
 
     //comments
-    //: single_line_comment ::= {47}{47} inside_comment* eol 
-    //: multi_line_comment ::= {47}{42} inside_comment* {42}{47}
+    //: single_line_comment ::= "//" inside_comment* eol 
+    //: multi_line_comment ::= "/*" inside_comment* "*/" 
 
     // to handle the common end-of-line sequences on different types
     // of systems, we treat the sequence CR+LF as an end of line.
@@ -595,7 +597,7 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: `; ::= ";" white*
     //: `++ ::= "++" white*
     //: `-- ::= "--" white*
-    //: `/ ::= "/" white*
+    //: `/ ::= "/" !"*" !"/" white*
 
     //keywords
     //: `boolean ::= "boolean" !idChar white*
@@ -704,13 +706,12 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
     //: reserved ::= `volatile
 
 
-    //: ID ::= !reserved letter idChar** !idChar white*=> text
+    //: ID ::= !reserved letter idChar** !idChar white* => text
 
     //: STRING_LITERAL ::= {34} letter++ {34} white* => text
 
     //: quote ::= {39} => void
     //: CHAR_LITERAL ::= quote letter quote white* => int return0(char)
-    
     public int return0(char dummy) { return 0; }
 
 }
