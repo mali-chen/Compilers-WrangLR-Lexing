@@ -708,10 +708,11 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
 
     //: ID ::= !reserved letter idChar** !idChar white* => text
 
-    //: STRING_LITERAL ::= {34} letter++ {34} white* => text
+    //: stringChar ::= printable !{92} !{92}{92}
+    //: STRING_LITERAL ::= {34} stringChar* {34} white* => text
 
-    //: quote ::= {39} => void
-    //: CHAR_LITERAL ::= quote letter quote white* => int return0(char)
-    public int return0(char dummy) { return 0; }
+    //: quote ::= {39} 
+    //: CHAR_LITERAL ::= quote letter quote white* => int charLiteral(char c)
+    public int charLiteral(char c) { return (int) c; }
 
 }
