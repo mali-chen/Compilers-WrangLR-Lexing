@@ -511,7 +511,6 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
             return 0;
         }
     }
-
     //================================================================
     // character patterns -- "helper symbols"
     //================================================================
@@ -708,11 +707,11 @@ public class TokenGrammar implements wrangLR.runtime.MessageObject
 
     //: ID ::= !reserved letter idChar** !idChar white* => text
 
-    //: stringChar ::= printable !{92} !{92}{92}
+    //: stringChar ::= !'"' printable => text
     //: STRING_LITERAL ::= {34} stringChar* {34} white* => text
 
     //: quote ::= {39} 
-    //: CHAR_LITERAL ::= quote letter quote white* => int charLiteral(char c)
+    //: CHAR_LITERAL ::= quote !"'" printable quote white* => int charLiteral(char c)
     public int charLiteral(char c) { return (int) c; }
 
 }
